@@ -1,0 +1,106 @@
+<mvc:View
+	controllerName="com.iaj.mys4hanasalesorders.controller.AddSalesOrder"
+	xmlns="sap.m"
+    xmlns:semantic="sap.m.semantic"
+    xmlns:f="sap.ui.layout.form"    
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"   >
+
+	<semantic:DetailPage
+        id="detailPage"
+        showFooter="true"
+		busy="{addSalesOrderView>/busy}"
+		busyIndicatorDelay="{addSalesOrderView>/delay}">
+   
+      
+		<semantic:content>
+                <f:SimpleForm id="InputSalesOrder"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    title="{i18n>criarOrdem}"
+                    labelSpanXL="3"
+                    labelSpanL="3"
+                    labelSpanM="3"
+                    labelSpanS="12"
+                    adjustLabelSpan="false"
+                    emptySpanXL="4"
+                    emptySpanL="4"
+                    emptySpanM="4"
+                    emptySpanS="0"
+                    columnsXL="1"
+                    columnsL="1"
+                    columnsM="1"
+                    singleContainerFullSize="false" >
+                    <f:content>
+                        <Label text="{i18n>codCliente}" />
+                        <Input id="codCliente" value="{addSalesOrderView>/salesOrder/BuyerId}" />
+
+                        <Label text="Moeda" />
+                        <Input id="codMoeda" value="{addSalesOrderView>/salesOrder/CurrencyCode}" /> 
+
+                        <Label text="Data" />
+                        <DatePicker id="dataOrdem" value="{addSalesOrderView>/salesOrder/CreatedAtDats}" ></DatePicker>
+
+
+                    </f:content>
+                </f:SimpleForm>
+
+            <Table id="idItemsSalesOrder"
+                        inset="false"
+                        items="{
+                            path: 'addSalesOrderView>/salesOrder/ToItems'
+                        }">
+
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <content>
+                                <Title text="Itens da Ordem" level="H2"/>
+                                <ToolbarSpacer />
+                                <Button icon="sap-icon://add" press="addNewItem" ></Button>
+                            </content>
+                        </OverflowToolbar>
+                    </headerToolbar>                        
+
+                <columns>
+                    <Column
+                        width="12em">
+                        <Text text="Item No." />
+                    </Column>                    
+                    <Column     width="12em">
+                        <Text text="Código Produto" />
+                    </Column>
+                    <Column     width="12em">
+                        <Text text="Quantidade" />
+                    </Column>
+                    <Column width="12em">
+                        <Text text="Unid. Med." />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                          <Text text="{addSalesOrderView>SoItemPos}" ></Text>  
+                        <ComboBox   
+                          items = "{/ProductSet}"
+                           value="{addSalesOrderView>ProductId}"  >
+                           <items>
+                               <core:Item text="{ProductId}" key="{ProductId}">
+                               </core:Item>
+                           </items>
+                        </ComboBox>
+                          <Input  value="{addSalesOrderView>Quantity}" ></Input>                          
+                          <Text text="PC" ></Text>  
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>                   
+
+		</semantic:content>
+
+        <semantic:customFooterContent>
+                    <Button text="{i18n>salvarOrdem}" press="onSaveOrder"/>
+        </semantic:customFooterContent>
+
+	</semantic:DetailPage>
+
+</mvc:View>
